@@ -29,6 +29,8 @@ Run the SQL files in order in the Supabase SQL editor (or `supabase db push`):
 3. `supabase/migrations/20261119000003_admin_helpers.sql` – admin RPCs, duplicate detection
 4. `supabase/migrations/20261119000004_admin_get_user.sql`
 5. `supabase/seed.sql` – passing-grade profiles, syllabus, starter lessons, sample questions, packages, a free mini try-out
+6. `supabase/migrations/20261119000005_content_twk.sql`, `…06_content_tiu.sql`, `…07_content_tkp.sql` – original learning content: 60 lessons covering every sub-topic and 346 practice/try-out questions with explanations (idempotent)
+7. `supabase/migrations/20261119000008_full_tryouts.sql` – two full 110-question / 100-minute try-outs (30/50/20 difficulty mix)
 
 Make the first super admin (after that account signs up):
 
