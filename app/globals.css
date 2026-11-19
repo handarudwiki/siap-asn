@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-jakarta);
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dbe7ff;
+  --color-brand-200: #bed3ff;
+  --color-brand-300: #91b5ff;
+  --color-brand-400: #5d8bfd;
+  --color-brand-500: #3863f8;
+  --color-brand-600: #2244ed;
+  --color-brand-700: #1a33d6;
+  --color-brand-800: #1c2cad;
+  --color-brand-900: #1d2c88;
+  --color-brand-950: #161c52;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --font-scale: 1;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* Lesson / explanation prose */
+.prose-siap {
+  line-height: 1.75;
+}
+.prose-siap h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.75rem;
+}
+.prose-siap h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+}
+.prose-siap p {
+  margin: 0.75rem 0;
+}
+.prose-siap ul,
+.prose-siap ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+.prose-siap ul {
+  list-style: disc;
+}
+.prose-siap ol {
+  list-style: decimal;
+}
+.prose-siap li {
+  margin: 0.25rem 0;
+}
+.prose-siap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95em;
+  display: block;
+  overflow-x: auto;
+}
+.prose-siap th,
+.prose-siap td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose-siap th {
+  background: #f1f5f9;
+}
+.prose-siap blockquote {
+  border-left: 4px solid var(--color-brand-400);
+  background: var(--color-brand-50);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+.prose-siap a {
+  color: var(--color-brand-700);
+  text-decoration: underline;
+}
+.prose-siap img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+}
+.prose-siap code {
+  background: #f1f5f9;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+/* Exam screen: discourage copying (FR-L38) */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
 }
