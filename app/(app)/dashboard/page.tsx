@@ -5,6 +5,7 @@ import { ScoreTrend } from "@/components/learn/score-trend";
 import { getEntitlements, requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { dateWIB, daysUntil } from "@/lib/format";
+import { studyStreak } from "@/lib/streak";
 import { TESTS, type Attempt, type TestCode } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Beranda" };
@@ -40,18 +41,11 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
 
   // study streak: consecutive WIB days with a completed lesson or practice/try-out
   const { data: practiceDays } = await supabase.from("practice_answers").select("created_at").eq("user_id", user.id).order("created_at", { ascending: false }).limit(500);
-  const days = new Set(
-    [...(progress ?? []).map((p) => p.completed_at), ...(practiceDays ?? []).map((p) => p.created_at), ...attempts.map((a) => a.submitted_at!)].map((d) =>
-      new Date(d).toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" }),
-    ),
-  );
-  let streak = 0;
-  for (let i = 0; ; i++) {
-    const d = new Date(Date.now() - i * 86400000).toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" });
-    if (days.has(d)) streak++;
-    else if (i > 0) break;
-    if (i > 365) break;
-  }
+  const streak = studyStreak([
+    ...(progress ?? []).map((p) => p.completed_at),
+    ...(practiceDays ?? []).map((p) => p.created_at),
+    ...attempts.map((a) => a.submitted_at!),
+  ]);
 
   const countdown = daysUntil(user.profile.exam_date);
   const name = user.profile.full_name?.split(" ")[0] ?? "Pejuang";
