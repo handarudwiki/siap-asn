@@ -13,10 +13,8 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
       <div className="relative hidden overflow-hidden bg-brand-700 lg:block">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#5d8bfd_0,transparent_50%),radial-gradient(circle_at_80%_80%,#1d2c88_0,transparent_45%)]" />
         <div className="relative flex h-full flex-col justify-end p-12 text-white">
-          <p className="text-3xl font-bold leading-snug">
-            “Simulasi CAT-nya persis seperti hari ujian. Saya tahu sub-topik mana yang harus dikejar.”
-          </p>
-          <p className="mt-4 text-brand-100">Testimoni ilustrasi – peserta beta SiapASN</p>
+          <p className="text-3xl font-bold leading-snug">Latihan seperti hari ujian. Tahu persis sub-topik mana yang harus dikejar.</p>
+          <p className="mt-4 text-brand-100">Materi terstruktur · Latihan dengan pembahasan · Try-out CAT dengan ranking nasional</p>
           <div className="mt-10 grid grid-cols-3 gap-4 text-center">
             {[
               ["110", "soal / try-out"],

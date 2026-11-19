@@ -11,7 +11,22 @@ export async function GET(request: NextRequest) {
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return NextResponse.redirect(`${origin}${next}`);
+    if (!error) {
+      // OAuth sign-ups can't carry metadata: attach first-touch UTM afterwards
+      const utm = request.cookies.get("sa_utm")?.value;
+      if (utm) {
+        const { data } = await supabase.auth.getClaims();
+        const uid = data?.claims?.sub;
+        if (uid) {
+          try {
+            await supabase.from("profiles").update({ acquisition: JSON.parse(utm) }).eq("id", uid).is("acquisition", null);
+          } catch {
+            /* ignore malformed cookie */
+          }
+        }
+      }
+      return NextResponse.redirect(`${origin}${next}`);
+    }
   }
   return NextResponse.redirect(`${origin}/masuk?error=auth`);
 }

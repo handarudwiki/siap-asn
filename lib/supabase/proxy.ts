@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "ref"];
 const PROTECTED = ["/dashboard", "/materi", "/latihan", "/tryout", "/paket", "/profil", "/onboarding", "/admin"];
 
 /** Refreshes the Supabase session cookie and does an optimistic auth redirect. */
@@ -40,6 +41,13 @@ export async function updateSession(request: NextRequest) {
     url.pathname = "/dashboard";
     url.search = "";
     return NextResponse.redirect(url);
+  }
+  // First-touch marketing attribution (30 days)
+  const sp = request.nextUrl.searchParams;
+  if (!request.cookies.get("sa_utm") && UTM_KEYS.some((k) => sp.get(k))) {
+    const utm = Object.fromEntries(UTM_KEYS.filter((k) => sp.get(k)).map((k) => [k, sp.get(k)!.slice(0, 100)]));
+    utm.landing = path;
+    response.cookies.set("sa_utm", JSON.stringify(utm), { maxAge: 60 * 60 * 24 * 30, path: "/", sameSite: "lax", httpOnly: true });
   }
   return response;
 }

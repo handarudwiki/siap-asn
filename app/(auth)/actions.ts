@@ -1,5 +1,6 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
@@ -11,6 +12,15 @@ const safeNext = (n: FormDataEntryValue | null) => {
   const v = typeof n === "string" ? n : "";
   return v.startsWith("/") && !v.startsWith("//") ? v : "/dashboard";
 };
+
+function readUtm(raw: string | undefined) {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as Record<string, string>;
+  } catch {
+    return null;
+  }
+}
 
 export async function signIn(_: AuthState, formData: FormData): Promise<AuthState> {
   const parsed = z
@@ -40,11 +50,12 @@ export async function signUp(_: AuthState, formData: FormData): Promise<AuthStat
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   const supabase = await createClient();
+  const utm = readUtm((await cookies()).get("sa_utm")?.value);
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      data: { full_name: parsed.data.full_name },
+      data: { full_name: parsed.data.full_name, ...(utm ? { utm } : {}) },
       emailRedirectTo: `${siteUrl()}/auth/callback?next=/onboarding`,
     },
   });
