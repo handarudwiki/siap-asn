@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "ref"];
-const PROTECTED = ["/dashboard", "/materi", "/latihan", "/tryout", "/paket", "/profil", "/onboarding", "/admin"];
+const PROTECTED = ["/dashboard", "/materi", "/latihan", "/tryout", "/paket", "/profil", "/onboarding", "/admin", "/ujian"];
 
 /** Refreshes the Supabase session cookie and does an optimistic auth redirect. */
 export async function updateSession(request: NextRequest) {
