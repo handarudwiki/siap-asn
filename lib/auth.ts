@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile, Role } from "@/lib/types";
 
@@ -8,6 +9,7 @@ export type SessionUser = { id: string; email: string | null; profile: Profile }
 
 /** Data Access Layer: verified user + profile for the current request (memoised per request). */
 export const getUser = cache(async (): Promise<SessionUser | null> => {
+  await connection(); // auth is always request-time
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
   const uid = data?.claims?.sub;
