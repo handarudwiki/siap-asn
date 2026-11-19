@@ -29,8 +29,12 @@ Run the SQL files in order in the Supabase SQL editor (or `supabase db push`):
 3. `supabase/migrations/20261119000003_admin_helpers.sql` – admin RPCs, duplicate detection
 4. `supabase/migrations/20261119000004_admin_get_user.sql`
 5. `supabase/seed.sql` – passing-grade profiles, syllabus, starter lessons, sample questions, packages, a free mini try-out
-6. `supabase/migrations/20261119000005_content_twk.sql`, `…06_content_tiu.sql`, `…07_content_tkp.sql` – original learning content: 60 lessons covering every sub-topic and 346 practice/try-out questions with explanations (idempotent)
+6. `supabase/migrations/20261119000005_content_twk.sql`, `…06_content_tiu.sql`, `…07_content_tkp.sql` – original learning content: 60 lessons and 346 questions with explanations (idempotent)
 7. `supabase/migrations/20261119000008_full_tryouts.sql` – two full 110-question / 100-minute try-outs (30/50/20 difficulty mix)
+8. `supabase/migrations/20261119000009_content_twk_2.sql`, `…10_content_tiu_2.sql`, `…11_content_tkp_2.sql` – content round 2: 13 new sub-topics (incl. the five missing TKP aspects), 51 more lessons, 513 more questions
+9. `supabase/migrations/20261119000012_full_tryouts_2.sql` – try-outs #3–#5
+
+Totals after all migrations: 36 sub-topics, 111 lessons, 859 questions (TWK 247, TIU 366, TKP 246), 6 try-outs.
 
 Make the first super admin (after that account signs up):
 
